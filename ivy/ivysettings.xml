@@ -47,6 +47,15 @@
       pattern="${maven2.pattern.ext}"
       m2compatible="true"
       />
+    <filesystem name="m2-local-publish" m2compatible="true">
+      <artifact pattern="${user.home}/.m2/repository/[organisation]/[module]/[revision]/[artifact]-[revision](-[classifier]).[ext]"/>
+    </filesystem>
+    <ibiblio name="m2-local"
+      root="file://${user.home}/.m2/repository"
+      pattern="${maven2.pattern.ext}"
+      m2compatible="true"
+      changingPattern=".*SNAPSHOT"
+      />
     <ibiblio name="apache-snapshot"
       root="${repository.apache.org}"
       m2compatible="true" 

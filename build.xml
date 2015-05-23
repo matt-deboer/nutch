@@ -507,6 +507,34 @@
     <echo message="project ${ant.project.name} published locally with version ${version}" />
   </target>
 
+	<!-- target: publish-local  =========================================== -->
+  <target name="publish-m2-local" depends="jar" description="--> publish this project in the local m2 repository">
+  	<tstamp>
+	     <format property="now" pattern="yyyyMMddHHmmss"/>
+	</tstamp>
+  	<ivy:makepom ivyfile="${ivy.file}" pomfile="${basedir}/pom.xml" templatefile="ivy/mvn.template">
+         <mapping conf="default" scope="compile"/>
+         <mapping conf="runtime" scope="runtime"/>
+  	</ivy:makepom>
+  	<!--
+  	<ivy:publish resolver="local-m2-publish" forcedeliver="true" overwrite="true" publishivy="false">
+  	    <artifacts pattern="bin/[type]s/[artifact].[ext]"/>
+  	  </ivy:publish>
+    -->
+  	
+  	<ivy:publish artifactspattern="${build.dir}/[artifact]-${version}.[ext]" 
+                    resolver="m2-local-publish"
+                    pubrevision="${version}"
+                    pubdate="${now}"
+                    status="integration"
+              forcedeliver="true"
+              overwrite="true"
+  	          publishivy="false"
+        />
+    <echo message="project ${ant.project.name} published locally (m2) with version ${version}" />
+  </target>	
+	
+	
   <!-- target: report  ================================================== -->
   <target name="report" depends="resolve-test" description="--> generates a report of dependencies">
     <ivy:report todir="${build.dir}"/>
