@@ -493,7 +493,10 @@
 
   <!-- target: publish-local  =========================================== -->
   <target name="publish-local" depends="jar" description="--> publish this project in the local ivy repository">
-    <ivy:publish artifactspattern="${build.dir}/[artifact]-${version}.[ext]" 
+  	<tstamp>
+        <format property="now" pattern="yyyyMMddHHmmss"/>
+    </tstamp>
+  	<ivy:publish artifactspattern="${build.dir}/[artifact]-${version}.[ext]" 
                     resolver="local"
                     pubrevision="${version}"
           pubdate="${now}"
